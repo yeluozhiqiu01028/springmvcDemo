@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.oracle.dao.RoleMapper">
+
+    <!--查询所有角色-->
+    <select id="getAllRole" resultType="roleCustom">
+        SELECT 	id, roleName, roleDesc FROM sys_role;
+    </select>
+    <!--通过id删除角色-->
+    <delete id="deleteRoleById" parameterType="int">
+        DELETE FROM `test`.`sys_role` WHERE `id` = #{id};
+    </delete>
+</mapper>

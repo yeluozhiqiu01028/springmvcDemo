@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.oracle.dao.UserMapper">
+
+    <resultMap id="userAll" type="userCustom">
+        <!--配置用户表-->
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="image" column="image"></result>
+        <result property="email" column="email"></result>
+        <result property="phoneNum" column="phoneNum"></result>
+        <!--配置第三张表 一对多-->
+        <collection property="roles" ofType="RoleCustom">
+           <result property="roleName" column="roleName"></result>
+            <result property="roleDesc" column="roleDesc"></result>
+        </collection>
+    </resultMap>
+
+    <!--查询所有用户-->
+    <select id="getAllUser" resultMap="userAll">
+        SELECT 	a.id,username,image,email,phoneNum,roleName,roleDesc
+        FROM sys_user a LEFT JOIN sys_user_role b
+        ON a.id=b.userId
+        LEFT JOIN sys_role c
+        ON b.roleId=c.id
+    </select>
+
+    <!--添加用户
+    keyProperty 主键
+
+    useGeneratedKeys  是否返回主键
+    -->
+    <insert id="addUser" parameterType="userCustom" >
+        INSERT INTO sys_user (`username`, `image`, `email`, `password`, `phoneNum`)
+	VALUES ( #{username}, #{image}, #{email}, #{password}, #{phoneNum});
+    </insert>
+
+    <!--登录方法-->
+    <select id="login" parameterType="map" resultType="userCustom">
+        SELECT 	`id`,
+	`username`,
+	`image`,
+	`email`,
+	`password`,
+	`phoneNum`
+
+	FROM `test`.`sys_user` WHERE username=#{username} AND PASSWORD =#{password};
+    </select>
+
+    <!--最新添加的用户 自增主键-->
+    <select id="getMaxId" resultType="integer">
+       SELECT MAX(id) FROM sys_user;
+    </select>
+
+</mapper>

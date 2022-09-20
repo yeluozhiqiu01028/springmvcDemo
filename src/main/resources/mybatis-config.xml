@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!--mybatis 核心配置文件-->
+
+<configuration>
+    <!--配置别名-->
+<settings>
+    <setting name="logImpl" value="STDOUT_LOGGING"/>
+</settings>
+
+    <typeAliases>
+        <!-- 单个实体类别名注册 -->
+        <!--        <typeAlias type="org.example.pojo.Product" alias="product"></typeAlias>-->
+        <!-- 批量实体类别名注册 -->
+        <package name="cn.oracle.pojo"/>
+    </typeAliases>
+
+    <!--  注册mapping.xml文件  -->
+    <mappers>
+        <!--<mapper resource="mybatis-dao.xml"></mapper>-->
+        <!-- resource:从resources目录下找指定名称的文件注册
+            url:使用绝对路径注册
+            class:动态代理方式下的注册
+         -->
+        <!--        <mapper class="org.example.mapper.UsersMapper"/>-->
+        <package name="cn.oracle.dao"/>
+
+    </mappers>
+</configuration>
